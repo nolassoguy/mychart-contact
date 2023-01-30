@@ -8,14 +8,15 @@ from selenium.webdriver.chrome.options import Options
 import creds
 import time
 
-contact = input("Which provider would you like to contact? Jackie or Amelia?: \n")
+print('\nWelcome to the Automated Gundersen Health System ® | MyChart Prescription Contact Program\n')
+contact = input("Which healthcare provider would you like to contact? \'Jackie\' or \'Amelia?\': \n")
 # new_message = input("What would you like to do? Type \'m\' to ask a medical question/refill prescription OR Type \'s\' to schedule an appointment")
 
 while contact != 'Jackie' and contact != 'Amelia':
-	contact = input('That healhcare provider is unknown. Please choose either Jackie or Amelia:\n')
+	contact = input('That healthcare provider is unknown. Please type either \'Jackie\' or \'Amelia:\'\n')
 
-subject = input("Enter your subject: \n")
-message = input("Enter your message: \n")
+subject = input("\nEnter your subject: \n")
+message = input("\nEnter your message: \n")
 
 chrome_options = Options()
 chrome_options.add_experimental_option("detach", True)
@@ -82,9 +83,9 @@ if contact == 'Jackie':
 	jackie()
 elif contact == 'Amelia':
 	amelia()
-# More names can be added
+# NOTE: more names can be added from a longer list of providers
 
-time.sleep(5)
+time.sleep(4)
 
 # Subject line
 try:
@@ -100,7 +101,8 @@ try:
 	element = WebDriverWait(driver, 10).until(
 		EC.presence_of_element_located((By.ID, 'EID-3a'))	
 	)
-	element.send_keys(message)	
+	element.send_keys(message)
+	print('')	
 except:
 	driver.quit()
 
