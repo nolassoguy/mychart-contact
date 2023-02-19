@@ -5,24 +5,28 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options
+import maskpass
 import creds
 import time
 
 print('\nWelcome to the Automated Gundersen Health System ® | MyChart Prescription Contact Program\n')
-contact = input("Which healthcare provider would you like to contact? \'Jackie\' or \'Amelia?\': \n")
-# new_message = input("What would you like to do? Type \'m\' to ask a medical question/refill prescription OR Type \'s\' to schedule an appointment")
+contact = input('Which healthcare provider would you like to contact? \'Jackie\' or \'Amelia?\': \n')
+# new_message = input('What would you like to do? Type \'m\' to ask a medical question/refill prescription OR Type \'s\' to schedule an appointment')
 
 while contact != 'Jackie' and contact != 'Amelia':
 	contact = input('That healthcare provider is unknown. Please type either \'Jackie\' or \'Amelia:\'\n')
 
-subject = input("\nEnter your subject: \n")
-message = input("\nEnter your message: \n")
+subject = input('\nEnter your subject: \n')
+message = input('\nEnter your message: \n')
+print('')
 
 chrome_options = Options()
 chrome_options.add_experimental_option("detach", True)
 
 username = creds.username
-password = creds.password
+password = maskpass.advpass('Enter your password:\n', '#')
+# print('Enter your password:\n')
+# password = input('Enter the password:\n')
 
 login_url = 'https://mychart.gundersenhealth.org/MyChart/Authentication/Login?'
 
@@ -77,7 +81,7 @@ time.sleep(3)
 def jackie():
 	contact = driver.find_elements(By.CLASS_NAME, '_ListElement')[0].click()
 def amelia():
-	contact = driver.find_elements(By.CLASS_NAME, '_ListElement')[2].click()
+	contact = driver.find_elements(By.CLASS_NAME, '_ListElement')[3].click()
 
 if contact == 'Jackie':
 	jackie()
@@ -90,7 +94,7 @@ time.sleep(4)
 # Subject line
 try:
 	element = WebDriverWait(driver, 10).until(
-		EC.presence_of_element_located((By.ID, 'EID-39'))	
+		EC.presence_of_element_located((By.ID, 'EID-3a'))	
 	)
 	element.send_keys(subject)	
 except:
@@ -99,7 +103,7 @@ except:
 # Message text
 try:
 	element = WebDriverWait(driver, 10).until(
-		EC.presence_of_element_located((By.ID, 'EID-3a'))	
+		EC.presence_of_element_located((By.ID, 'EID-3b'))	
 	)
 	element.send_keys(message)
 	print('')	
