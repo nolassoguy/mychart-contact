@@ -5,9 +5,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options
-import maskpass
-import creds
-import time
+import maskpass, creds, time
 
 print('\nWelcome to the Automated Gundersen Health System ® | MyChart Prescription Contact Program\n')
 contact = input('Which healthcare provider would you like to contact? \'Jackie\' or \'Amelia?\': \n')
@@ -24,9 +22,7 @@ chrome_options = Options()
 chrome_options.add_experimental_option("detach", True)
 
 username = creds.username
-password = maskpass.advpass('Enter your password:\n', '#')
-# print('Enter your password:\n')
-# password = input('Enter the password:\n')
+password = maskpass.advpass('Enter your password:\n', '* ')
 
 login_url = 'https://mychart.gundersenhealth.org/MyChart/Authentication/Login?'
 
@@ -109,5 +105,41 @@ try:
 	print('')	
 except:
 	driver.quit()
+
+# Send message confirmation
+send_message = input('Would you like to send your message now? Type \'y\' for YES or \'n\' for NO:\n')
+
+while send_message != 'y' and send_message != 'n':
+	send_message = input('Please type either \'y\' or \'n:\'\n')
+
+if send_message == 'y':
+	try:
+		element = WebDriverWait(driver, 10).until(
+			EC.presence_of_element_located((By.ID, 'EID-3b'))	
+		)
+		time.sleep(1)
+		element.send_keys('...')
+		print(f'Message sent to {contact}!')	
+	except:
+		driver.quit()
+else:
+	print('Goodbye')
+	time.sleep(3)
+	driver.quit()
+
+# TODO
+# Discard message or after message has been sent - logout of website and close driver.
+
+
+# TODO userinput '(f'Would you like to send your message to {contact}? Type 'y' or 'n')
+# if userinput == y:
+#	click send button
+# elif userinput != y or != n
+#	print('please type y or n')
+# else:
+#	print('OK goodbye')
+
+# print(success! message sent to provider)
+# time.sleep(5)
 
 # driver.quit()
