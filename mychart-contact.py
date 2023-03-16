@@ -7,12 +7,12 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options
 import maskpass, creds, time
 
-print('\nWelcome to the Automated Gundersen Health System ® | MyChart Prescription Contact Program\n')
-contact = input('Which healthcare provider would you like to contact? \'Jackie\' or \'Amelia?\': \n')
+print('\nWelcome to the Automated Gundersen Health System ®\nMyChart Prescription Contact Program\n')
+contact = input('Which healthcare provider would you like to contact?\n\'Jackie\' or \'Amelia?\': \n')
 # new_message = input('What would you like to do? Type \'m\' to ask a medical question/refill prescription OR Type \'s\' to schedule an appointment')
 
 while contact != 'Jackie' and contact != 'Amelia':
-	contact = input('That healthcare provider is unknown. Please type either \'Jackie\' or \'Amelia:\'\n')
+	contact = input('That healthcare provider is unknown.\nPlease type either \'Jackie\' or \'Amelia:\'\n')
 
 subject = input('\nEnter your subject: \n')
 message = input('\nEnter your message: \n')
@@ -22,7 +22,7 @@ chrome_options = Options()
 chrome_options.add_experimental_option("detach", True)
 
 username = creds.username
-password = maskpass.advpass('Enter your password:\n', '* ')
+password = maskpass.advpass('Enter your password:\n', '• ')
 
 login_url = 'https://mychart.gundersenhealth.org/MyChart/Authentication/Login?'
 
@@ -107,10 +107,10 @@ except:
 	driver.quit()
 
 # Send message confirmation
-send_message = input('Would you like to send your message now? Type \'y\' for YES or \'n\' for NO:\n')
+send_message = input('Would you like to send your message now?\nType \'y\' for YES or \'n\' for NO:\n')
 
 while send_message != 'y' and send_message != 'n':
-	send_message = input('Please type either \'y\' or \'n:\'\n')
+	send_message = input('\nPlease type either \'y\' or \'n:\'\n')
 
 if send_message == 'y':
 	try:
@@ -119,11 +119,11 @@ if send_message == 'y':
 		)
 		time.sleep(1)
 		element.send_keys('...')
-		print(f'Message sent to {contact}!')	
+		print(f'\nMessage sent to {contact}!')	
 	except:
 		driver.quit()
 else:
-	print('Goodbye')
+	print('\nGoodbye')
 	time.sleep(3)
 	driver.quit()
 
